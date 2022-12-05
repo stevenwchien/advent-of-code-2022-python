@@ -19,15 +19,27 @@ class Stack:
   def pop(self):
     return self.crates.pop()
 
+  def move(self, num):
+    moved_crates = self.crates[(-1 - num + 1):]
+    self.crates = self.crates[0:len(self.crates) - num]
+
+    return moved_crates
+
+  def place(self, crates):
+    self.crates = self.crates + crates
+
   def peek(self):
     return self.crates[-1]
 
   def empty(self):
-    len(self.crates) == 0
+    return len(self.crates) == 0
+
+  def num_entries(self):
+    return len(self.crates)
 
 class Stacks:
   def __init__(self, lines):
-    self.num_stacks = 0
+    self.num_stacks = 9
     self.stacks: list[Stack] = [
       Stack(['D', 'T', 'R', 'B', 'J', 'L', 'W', 'G']),
       Stack(['S', 'W', 'C']),
@@ -40,19 +52,47 @@ class Stacks:
       Stack(['Q', 'P', 'D', 'S', 'V']),
     ]
 
+  def print(self):
+    nums = ' '.join([f' {j + 1} ' for j in range(self.num_stacks)])
+    final = [nums]
+    max_stack_length = max(list(map(lambda stack : stack.num_entries(), self.stacks)))
+
+    for crate_idx in range(max_stack_length):
+      line_item = ''
+      for stack_idx in range(self.num_stacks):
+        if self.stacks[stack_idx].num_entries() > crate_idx:
+          line_item += f'[{self.stacks[stack_idx].crates[crate_idx]}]'
+        else:
+          line_item += f'   '
+
+        line_item += ' '
+
+      final.append(line_item)
+
+    while len(final) > 0:
+      print(final.pop())
+
+  def process_instruction2(self, instruction: Instruction):
+    num = int(instruction.num_boxes)
+    start_idx = int(instruction.start)
+    end_idx = int(instruction.end)
+    start_stack = self.stacks[start_idx-1]
+    end_stack = self.stacks[end_idx-1]
+    crates_to_move = start_stack.move(num)
+    end_stack.place(crates_to_move)
+
   def process_instruction(self, instruction: Instruction):
     num = int(instruction.num_boxes)
     start_idx = int(instruction.start)
     end_idx = int(instruction.end)
+    start_stack = self.stacks[start_idx-1]
+    end_stack = self.stacks[end_idx-1]
 
     for _i in range(num):
-      self.stacks[end_idx-1].push(self.stacks[start_idx-1].pop())
+      end_stack.push(start_stack.pop())
 
   def top_crates(self):
     return ''.join(list(map(lambda stack : stack.peek(), self.stacks)))
-
-def process_instruction(instruction: Instruction):
-  print(f'move {instruction.num_boxes} boxes from {instruction.start} to {instruction.end}')
 
 with open('inputs/day5.txt') as f:
   stack_lines = []
@@ -63,9 +103,13 @@ with open('inputs/day5.txt') as f:
     stack_lines.append(line)
 
   stacks = Stacks(stack_lines)
+  stacks2 = Stacks(stack_lines)
 
+  i = 0
   for line in f:
     instruction = Instruction(line)
     stacks.process_instruction(instruction)
+    stacks2.process_instruction2(instruction)
 
   print(stacks.top_crates())
+  print(stacks2.top_crates())
