@@ -5,9 +5,9 @@ class Instruction:
     pattern = re.compile(r'move (?P<num_boxes>\d+) from (?P<start>\d+) to (?P<end>\d+)')
     match = pattern.search(line)
 
-    self.num_boxes = match['num_boxes']
-    self.start = match['start']
-    self.end = match['end']
+    self.num_boxes: int = int(match['num_boxes'])
+    self.start: int =int(match['start'])
+    self.end: int = int(match['end'])
 
 class Stack:
   def __init__(self, crates):
@@ -52,7 +52,24 @@ class Stacks:
       Stack(['Q', 'P', 'D', 'S', 'V']),
     ]
 
-  def print(self):
+  def process_instruction2(self, instruction: Instruction):
+    start_stack = self.stacks[instruction.start-1]
+    end_stack = self.stacks[instruction.end-1]
+    crates_to_move = start_stack.move(instruction.num_boxes)
+
+    end_stack.place(crates_to_move)
+
+  def process_instruction(self, instruction: Instruction):
+    start_stack = self.stacks[instruction.start-1]
+    end_stack = self.stacks[instruction.end-1]
+
+    for _i in range(instruction.num_boxes):
+      end_stack.push(start_stack.pop())
+
+  def top_crates(self) -> str:
+    return ''.join(list(map(lambda stack : stack.peek(), self.stacks)))
+
+  def print(self) -> None:
     nums = ' '.join([f' {j + 1} ' for j in range(self.num_stacks)])
     final = [nums]
     max_stack_length = max(list(map(lambda stack : stack.num_entries(), self.stacks)))
@@ -72,28 +89,6 @@ class Stacks:
     while len(final) > 0:
       print(final.pop())
 
-  def process_instruction2(self, instruction: Instruction):
-    num = int(instruction.num_boxes)
-    start_idx = int(instruction.start)
-    end_idx = int(instruction.end)
-    start_stack = self.stacks[start_idx-1]
-    end_stack = self.stacks[end_idx-1]
-    crates_to_move = start_stack.move(num)
-    end_stack.place(crates_to_move)
-
-  def process_instruction(self, instruction: Instruction):
-    num = int(instruction.num_boxes)
-    start_idx = int(instruction.start)
-    end_idx = int(instruction.end)
-    start_stack = self.stacks[start_idx-1]
-    end_stack = self.stacks[end_idx-1]
-
-    for _i in range(num):
-      end_stack.push(start_stack.pop())
-
-  def top_crates(self):
-    return ''.join(list(map(lambda stack : stack.peek(), self.stacks)))
-
 with open('inputs/day5.txt') as f:
   stack_lines = []
   for line in f:
@@ -105,11 +100,13 @@ with open('inputs/day5.txt') as f:
   stacks = Stacks(stack_lines)
   stacks2 = Stacks(stack_lines)
 
-  i = 0
   for line in f:
     instruction = Instruction(line)
     stacks.process_instruction(instruction)
     stacks2.process_instruction2(instruction)
 
-  print(stacks.top_crates())
-  print(stacks2.top_crates())
+  stacks.print()
+  print(f'Solution Part 1: {stacks.top_crates()}')
+
+  stacks2.print()
+  print(f'Solution Part 2: {stacks2.top_crates()}')
