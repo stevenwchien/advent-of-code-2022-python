@@ -13,7 +13,6 @@ def duplicate_item(line):
     if line[j] in items:
       return line[j]
 
-
 priorities = 0
 
 with open('inputs/day3.txt') as f:
@@ -22,7 +21,6 @@ with open('inputs/day3.txt') as f:
     priorities += priority(duplicated_item)
 
 print(priorities)
-
 
 priorities2  = 0
 
