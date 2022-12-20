@@ -1,3 +1,5 @@
+import functools
+
 class Operation:
   def __init__(self, op: str):
     self.op = op
@@ -33,15 +35,21 @@ class Monkey:
     self.inspected: int = 0
 
 class MonkeysInTheMiddle:
-  def __init__(self, monkeys: list[Monkey]):
+  def __init__(self, part: int, monkeys: list[Monkey]):
+    self.part: int = part
     self.monkeys: list[Monkey] = monkeys
+    self.modulo: int = functools.reduce(lambda a, b: a * b, list(map(lambda monkey: monkey.divisible_by, self.monkeys)))
 
   def round(self):
     for monkey in self.monkeys:
       while(len(monkey.items_queue) > 0):
         item = monkey.items_queue.pop(0)
         new_item = monkey.operation.operate(item)
-        new_item = new_item // 3
+
+        if self.part == 1:
+          new_item = new_item // 3
+        else:
+          new_item = new_item % self.modulo
 
         if new_item % monkey.divisible_by == 0:
           self.monkeys[monkey.true_to].items_queue.append(new_item)
@@ -84,9 +92,20 @@ while file:
       throw_to_false = int(line.split('    If false: throw to monkey ')[1])
 
 file.close()
-print(len(monkeys))
-monkeys_in_the_middle = MonkeysInTheMiddle(monkeys)
+
+
+monkeys_in_the_middle = MonkeysInTheMiddle(part=1, monkeys=monkeys)
 for i in range(20):
   monkeys_in_the_middle.round()
 
-print(f'Part 1 Vals: {monkeys_in_the_middle.inspected_vals()}')
+vals = monkeys_in_the_middle.inspected_vals()
+vals.sort()
+print(f'Part 1 Vals: {vals[-1]} * {vals[-2]} = {vals[-1] * vals[-2]}')
+
+monkeys_in_the_middle = MonkeysInTheMiddle(part=1, monkeys=monkeys)
+for i in range(10000):
+  monkeys_in_the_middle.round()
+
+vals = monkeys_in_the_middle.inspected_vals()
+vals.sort()
+print(f'Part 2 Vals: {vals[-1]} * {vals[-2]} = {vals[-1] * vals[-2]}')
