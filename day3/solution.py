@@ -15,7 +15,7 @@ def duplicate_item(line):
 
 priorities = 0
 
-with open('inputs/day3.txt') as f:
+with open('day3/input.txt') as f:
   for line in f:
     duplicated_item = duplicate_item(line)
     priorities += priority(duplicated_item)
@@ -24,7 +24,7 @@ print(priorities)
 
 priorities2  = 0
 
-with open('inputs/day3.txt') as f:
+with open('day3/input.txt') as f:
   lines = [line for line in f]
 
   for i in range(len(lines) // 3):

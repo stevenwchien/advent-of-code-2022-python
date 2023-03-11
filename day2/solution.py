@@ -10,7 +10,7 @@ scores = {
   "C Z": 6, # Scissors vs. Scissors
 }
 
-with open("inputs/day2.txt") as f:
+with open("day2/input.txt") as f:
   total_score = 0
   for combo in f:
     total_score += scores[combo.strip()]
@@ -29,7 +29,7 @@ scores2 = {
   "C Z": 7, # Scissors Win Rock
 }
 
-with open("inputs/day2.txt") as f:
+with open("day2/input.txt") as f:
   total_score = 0
   for combo in f:
     total_score += scores2[combo.strip()]

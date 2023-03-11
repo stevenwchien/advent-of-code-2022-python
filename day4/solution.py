@@ -13,7 +13,7 @@ class Range:
 
 contains_count = 0
 overlaps_count = 0
-with open('inputs/day4.txt') as f:
+with open('day4/input.txt') as f:
   for line in f:
     [r1, r2] = line.split(',')
     range1 = Range(r1)
