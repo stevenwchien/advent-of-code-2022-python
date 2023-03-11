@@ -1,7 +1,7 @@
 
 elves = [0]
 idx = 0
-with open('inputs/day1.txt') as f:
+with open('day1/input.txt') as f:
   for line in f:
     if line == '\n':
       idx += 1
