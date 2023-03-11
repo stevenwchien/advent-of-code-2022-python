@@ -80,7 +80,7 @@ class FileSystem:
         [filesize, filename] = content.split(' ')
         self.wd.children[filename] = File(filename, int(filesize), self.wd)
 
-with open('inputs/day7.txt') as f:
+with open('day7/input.txt') as f:
   file_system = FileSystem()
   lines = f.readlines()
   i = 1

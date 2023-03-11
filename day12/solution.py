@@ -105,7 +105,7 @@ class Hill:
 
 
 if __name__ == '__main__':
-  with open('inputs/day12.txt') as f:
+  with open('day12/input.txt') as f:
     lines = f.readlines()
     grid = list(map(lambda line: [c for c in line.strip()], lines))
 

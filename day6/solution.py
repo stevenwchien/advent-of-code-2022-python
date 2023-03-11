@@ -1,4 +1,4 @@
-line = open('inputs/day6.txt').readline()
+line = open('day6/input.txt').readline()
 
 def first_n_unique_characters(line: str, n: int) -> int:
   ptr = n

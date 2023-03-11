@@ -19,11 +19,13 @@ class Operation:
     
     return val
 
-  def update(self, operation, ls, rs) -> int:
+  def update(self, operation, ls: int, rs: int) -> int:
     if operation == '+':
       return ls + rs
     elif operation == '*':
       return ls * rs
+    else:
+      raise
 
 class Monkey:
   def __init__(self, items_queue: list[int], operation: Operation, divisible_by: int, true_to: int, false_to: int):
@@ -68,7 +70,7 @@ divisible_by = 0
 throw_to_true = -1
 throw_to_false = -1
 
-file = open('inputs/day11.txt')
+file = open('day11/input.txt')
 while file:
     line = file.readline()
     if line == "":

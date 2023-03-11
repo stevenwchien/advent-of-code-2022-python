@@ -93,7 +93,7 @@ def compare(sl1: SignalList | int, sl2: SignalList | int) -> int:
 
 # Part 1
 pairs = []
-with open('inputs/day13.txt') as file:
+with open('day13/input.txt') as file:
   first = True
   for line in file:
     if line == '\n':
@@ -121,7 +121,7 @@ decoder2 = SignalList.parse('[[2]]')
 decoder6 = SignalList.parse('[[6]]')
 
 signal_lists = [decoder2,decoder6]
-with open('inputs/day13.txt') as file:
+with open('day13/input.txt') as file:
   for line in file:
     if line == '\n':
       continue

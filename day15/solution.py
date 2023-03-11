@@ -81,7 +81,7 @@ def impossible_range(sensors: list[Sensor], y_row: int) -> list:
 # Part 1
 y_row = 2000000
 sensors = []
-with open('input.txt') as f:
+with open('day15/input.txt') as f:
   for line in f:
     m = re.match(REGEXP, line)
     if m == None:
@@ -94,7 +94,7 @@ with open('input.txt') as f:
 
 # Part 2
 sensors = []
-with open('input.txt') as f:
+with open('day15/input.txt') as f:
   for line in f:
     m = re.match(REGEXP, line)
     if m == None:

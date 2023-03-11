@@ -89,7 +89,7 @@ class Stacks:
     while len(final) > 0:
       print(final.pop())
 
-with open('inputs/day5.txt') as f:
+with open('day5/input.txt') as f:
   stack_lines = []
   for line in f:
     if line == '\n':

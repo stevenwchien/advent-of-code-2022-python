@@ -88,7 +88,7 @@ class Forest:
 
     return are_less
 
-with open('inputs/day8.txt') as f:
+with open('day8/input.txt') as f:
   lines = f.readlines()
   grid = list(map(lambda line: [int(d) for d in line.strip()], lines))
   forest = Forest(grid)

@@ -51,7 +51,7 @@ class Computer:
       self.interesting.append(self.strength())
       self.sum_interesting += self.strength()
 
-with open('inputs/day10.txt') as f:
+with open('day10/input.txt') as f:
   computer = Computer()
 
   for line in f:

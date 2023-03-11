@@ -100,7 +100,7 @@ class Grid:
   def unique_tail_visits(self) -> int:
     return len(self.visited)
 
-with open('inputs/day9.txt') as f:
+with open('day9/input.txt') as f:
   grid1 = Grid(2)
   grid2 = Grid(10)
 
